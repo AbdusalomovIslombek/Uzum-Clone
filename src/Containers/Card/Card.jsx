@@ -90,7 +90,10 @@ const Card = ({ product }) => {
           />
         )}
       </div>
-      <p className="font-bold text-[16px]" onClick={hanleClick}>
+      <p
+        className="font-bold text-[16px] h-12 line-clamp-2"
+        onClick={hanleClick}
+      >
         {title}
       </p>
       {rating == 0 ? (

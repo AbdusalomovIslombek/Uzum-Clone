@@ -37,28 +37,33 @@ const Navbar = () => {
   }
   return (
     <div>
-      <div className=" ">
+      <div>
         <div className="flex px-32 bg-slate-100 dark:bg-dark dark:text-white justify-between">
           <div className="flex items-center">
             <CiLocationOn />
             <p className="underline pl">Ташкент</p>
-            <p className="pl-5 font-semibold">{t("pick-up point")}</p>
+            <p className="pl-5 font-semibold hidden lg:flex">
+              {t("pick-up point")}
+            </p>
           </div>
 
-          <div className=" ">
+          <div className="flex">
             <a
-              className="pr-2 text-purple-500 font-semibold border-r-2"
+              className="pr-2 text-purple-500 font-semibold border-r-2 hidden lg:flex"
               href=""
             >
               Стать продавцом
             </a>
-            <a className="pl-2 text-purple-500 font-semibold" href="">
+            <a
+              className="pl-2 text-purple-500 font-semibold hidden lg:flex"
+              href=""
+            >
               Открыть пункт выдачи
             </a>
-            <a className="pl-4" href="">
+            <a className="pl-4 hidden lg:flex" href="">
               Вапрос-ответ
             </a>
-            <a className="pl-4" href="">
+            <a className="pl-4 hidden lg:flex" href="">
               Мои заказы
             </a>
             <button className="pl-4" onClick={changeLanguage}>
@@ -70,7 +75,7 @@ const Navbar = () => {
         <div className="px-32 pt-5 flex items-center dark:bg-dark dark:text-white">
           <Link to={"/"}>
             <img
-              className="w-60 "
+              className="w-60 min-w-24"
               src="https://uzum.com/images/services/market-horizontal-logo.png"
               alt=""
             />
@@ -93,10 +98,11 @@ const Navbar = () => {
               to={"/auth"}
             >
               <VscAccount className="size-5" />
+              <span className="hidden lg:flex">Войти</span>
               Войти
             </Link>
             <Link
-              className="flex items-center gap-2 text-l hover:bg-gray-100 relative"
+              className="items-center gap-2 text-l hover:bg-gray-100 relative hidden lg:flex"
               to={"/favorite"}
             >
               <IoMdHeartEmpty className="size-6" />
@@ -106,7 +112,7 @@ const Navbar = () => {
               </span>
             </Link>
             <Link
-              className="flex items-center gap-2 text-lg hover:bg-gray-100 relative"
+              className="items-center gap-2 text-lg hover:bg-gray-100 relative hidden lg:flex"
               to={"/cart"}
             >
               <MdOutlineShoppingBag className="size-5" />
@@ -122,12 +128,12 @@ const Navbar = () => {
               {darkMode ? (
                 <>
                   <BsSunFill className="size-5" />
-                  Light
+                  <span className="hidden lg:flex">Light</span>
                 </>
               ) : (
                 <>
                   <BsMoonFill className="size-5" />
-                  Dark
+                  <span className="hidden lg:flex">Dark</span>
                 </>
               )}
             </button>
