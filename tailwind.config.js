@@ -5,18 +5,19 @@ module.exports = withMT({
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      animation: {
-        yurak: "yurak 0.3s ease-in-out infinite",
-      },
-      keyframes: {
-        yurak: {
-          "0%": { transform: "scale(100%)" },
-          "100%": { transform: "scale(120%)" },
-        },
-      },
+      // animation: {
+      //   yurak: "yurak 0.3s ease-in-out infinite",
+      // },
+      // keyframes: {
+      //   yurak: {
+      //     "0%": { transform: "scale(100%)" },
+      //     "100%": { transform: "scale(0%)" },
+      //   },
+      // },
       colors: {
         dark: "#0f172a",
-        uzum: "#7f4dff",
+        olcha: "#d32f2f",
+        // olcha: "#a52a2a",
       },
     },
   },

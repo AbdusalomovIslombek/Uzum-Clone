@@ -4,7 +4,7 @@ const Category = ({ data }) => {
 
   return (
     <div>
-      <h1 className="text-3xl py-3 font-bold">{data.title}</h1>
+      <h1 className="text-xl p-1 font-bold">{data.title}</h1>
       <div className="flex gap-5 justify-center flex-wrap ">
         {data.productList.map((product) => (
           <Card product={product} key={product.productId} />

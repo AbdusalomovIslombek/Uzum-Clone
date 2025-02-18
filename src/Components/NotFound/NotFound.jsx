@@ -1,13 +1,26 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const NotFound = () => {
   return (
-    <div className="flex justify-center items-center h-96">
+    <div className="flex justify-center items-center gap-20 pt-12">
       <img
-        className="w-[750px] h-96"
-        src="https://www.pngkey.com/png/detail/147-1473883_404-error-404-not-found-png.png"
+        className=""
+        src="https://olcha.uz/_nuxt/network.BCpDSYMO.png"
         alt=""
       />
+      <div>
+        <p className="text-4xl font-bold pb-6">Network Error 511</p>
+        <p className="text-xl pb-6">
+          Nimadir xato ketdi, iltimos qaytadan urinib ko'ring.
+        </p>
+        <Link
+          className="text-white text-base rounded-xl bg-olcha px-4 py-3"
+          to={"/"}
+        >
+          Bosh sahifaga qaytish
+        </Link>
+      </div>
     </div>
   );
 };

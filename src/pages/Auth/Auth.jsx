@@ -8,8 +8,14 @@ import {
 import React, { useState } from "react";
 import { Controller, set, useForm } from "react-hook-form";
 import { BiHide, BiShow } from "react-icons/bi";
+import { auth, googleProvider } from "../../utils/firebase";
+import { signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useStore } from "../../store/store";
 
 const Auth = () => {
+  const { setUser } = useStore();
+  const navigate = useNavigate();
   const [passwordShow, setPasswordShow] = useState(false);
   const {
     register,
@@ -23,91 +29,28 @@ const Auth = () => {
   function changePasswordShow() {
     setPasswordShow(!passwordShow);
   }
+  function signInWithGoogle() {
+    signInWithPopup(auth, googleProvider).then((result) => {
+      setUser(result.user);
+      navigate("/");
+    });
+  }
   return (
-    <div className="flex justify-center dark:bg-dark dark:text-white text-xs">
-      {/* <form
-        onSubmit={handleSubmit(sendData)}
-        className="flex flex-col gap-2 p-4"
-      >
-        <input
-          type="email"
-          className="p-2 rounded-md"
-          {...register("email", { required: true, minLength: 5 })}
-        />
-        {errors.email && (
-          <p className="text-deep-orange-600 m-0 text-center text-xs">
-            email kiritilishi shart!
-          </p>
-        )}
-        <input
-          type="password"
-          className="p-2 rounded-md"
-          {...register("password", {
-            required: true,
-            pattern:
-              /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-          })}
-        />
-        {errors.password?.type == "required" && (
-          <p className="text-deep-orange-600 m-0 text-center text-xs">
-            parol kiritilishi shart!
-          </p>
-        )}
-        {errors.password?.type == "pattern" && (
-          <>
-            <p className="text-deep-orange-600 m-0 text-center text-xs">
-              Parol kamida 8 ta harf, 1 ta katta harf
-            </p>
-            <p className="text-deep-orange-600 m-0 text-center text-xs">
-              1 ta son
-            </p>
-            <p className="text-deep-orange-600 m-0 text-center text-xs">
-              1 ta sinvol
-            </p>
-          </>
-        )}
-        <input type="submit" className="p-1 rounded-md bg-uzum" />
-      </form> */}
+    <div className="flex justify-center dark:bg-dark text-xs p-6">
       <Card color="transparent" shadow={false}>
-        <Typography variant="h4" color="blue-gray" className="dark:text-white">
-          Sign Up
+        <Typography variant="h4" className="dark:text-olcha">
+          Ro'yxatdan o'tish
         </Typography>
-        <Typography color="gray" className="mt-1 font-normal dark:text-white">
-          Nice to meet you! Enter your details to register.
+        <Typography className="mt-1 font-normal dark:text-olcha">
+          Ro'yxatdan o'tish uchun ma'lumotlarni kiriting.
         </Typography>
         <form
           className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
           onSubmit={handleSubmit(sendData)}
         >
           <div className="mb-1 flex flex-col gap-6">
-            <Typography
-              variant="h6"
-              color="blue-gray"
-              className="-mb-3 dark:text-white"
-            >
-              Your Name
-            </Typography>
-            <Controller
-              name="name"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  size="lg"
-                  placeholder="name@mail.com"
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 dark:text-white"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                  {...field}
-                />
-              )}
-            />
-            <Typography
-              variant="h6"
-              color="blue-gray"
-              className="-mb-3 dark:text-white"
-            >
-              Your Email
+            <Typography variant="h6" className="-mb-3 dark:text-olcha">
+              Sizning nomeringiz
             </Typography>
             <Controller
               name="email"
@@ -115,8 +58,8 @@ const Auth = () => {
               render={({ field }) => (
                 <Input
                   size="lg"
-                  placeholder="name@mail.com"
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 dark:text-white"
+                  placeholder="Telefon raqamingiz"
+                  className=" !border-t-blue-gray-200 dark:text-olcha dark:border-olcha"
                   labelProps={{
                     className: "before:content-none after:content-none",
                   }}
@@ -124,12 +67,8 @@ const Auth = () => {
                 />
               )}
             />
-            <Typography
-              variant="h6"
-              color="blue-gray"
-              className="-mb-3 dark:text-white"
-            >
-              Password
+            <Typography variant="h6" className="-mb-3 dark:text-olcha">
+              Parolingiz
             </Typography>
             <div className="relative">
               <Controller
@@ -139,8 +78,8 @@ const Auth = () => {
                   <Input
                     type={passwordShow ? "text" : "password"}
                     size="lg"
-                    placeholder="********"
-                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900 dark:text-white"
+                    placeholder="****"
+                    className=" !border-t-blue-gray-200 dark:text-olcha dark:border-olcha"
                     labelProps={{
                       className: "before:content-none after:content-none",
                     }}
@@ -167,38 +106,35 @@ const Auth = () => {
             name="terms"
             control={control}
             render={({ field }) => (
-              <Checkbox
-                label={
-                  <Typography
-                    variant="small"
-                    color="gray"
-                    className="flex items-center font-normal dark:text-white"
-                  >
-                    I agree the
-                    <a
-                      href="#"
-                      className="font-medium transition-colors hover:text-gray-900"
-                    >
-                      &nbsp;Terms and Conditions
-                    </a>
-                  </Typography>
-                }
-                containerProps={{ className: "-ml-2.5" }}
-                {...field}
-              />
+              <Typography
+                variant="small"
+                className="font-normal flex justify-end"
+              >
+                <a href="#" className="font-medium text-blue-500 underline">
+                  Parolni unutdingizmi?
+                </a>
+              </Typography>
             )}
           />
-          <Button className="mt-6" fullWidth type="submit">
-            sign up
-          </Button>
-          <Typography
-            color="gray"
-            className="mt-4 text-center font-normal dark:text-white"
+          <Button
+            className="mt-6 bg-olcha dark:text-dark"
+            fullWidth
+            type="submit"
           >
-            Already have an account?{" "}
-            <a href="#" className="font-medium text-gray-900 dark:text-white">
-              Sign In
-            </a>
+            Tasdiqlash
+          </Button>
+          <Typography className="mt-4 text-center font-normal flex justify-end">
+            <button
+              className="dark:text-olcha dark:bg-dark dark:border-olcha flex gap-3 p-1 rounded-xl border"
+              onClick={signInWithGoogle}
+            >
+              <img
+                src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+                alt=""
+                className="w-7 h-7"
+              />
+              Google orqali kiring
+            </button>
           </Typography>
         </form>
       </Card>

@@ -33,6 +33,12 @@ export const useStore = create(
           let yangi = eski.filter((id) => id != productId);
           return { cart: yangi };
         }),
+      products: [],
+      setProducts: (allProduct) => set(() => ({ products: allProduct })),
+      mainData: [],
+      setMainData: (allData) => set(() => ({ mainData: allData })),
+      user: {},
+      setUser: (userFromFirebase) => set(() => ({ user: userFromFirebase })),
     }),
     {
       name: "uzum-storage", // name of the item in the storage (must be unique)

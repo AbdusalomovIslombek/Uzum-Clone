@@ -4,9 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
 import { useStore } from "../../store/store";
 import { IoBagAddOutline, IoBagCheckOutline } from "react-icons/io5";
+import { LuShoppingCart } from "react-icons/lu";
+import { FiHeart } from "react-icons/fi";
+import { BiBarChart } from "react-icons/bi";
 
 const Card = ({ product }) => {
-  const { images, title, rating, fullPrice, sellPrice, productId } = product;
+  const { images, title, fullPrice, installmentPrice, productId } = product;
   const {
     addToFavorite,
     favorite,
@@ -50,72 +53,56 @@ const Card = ({ product }) => {
   }
 
   return (
-    <div className="shadow-lg bg-slate-50 w-60 cursor-pointer dark:bg-dark dark:text-white rounded-md overflow-hidden">
+    <div className="bg-slate-50 w-[270px] cursor-pointer dark:bg-dark dark:text-olcha">
       <div className="relative">
-        <img src={images[0]} alt="" className="w-60" onClick={hanleClick} />
-
-        {isFavorite ? (
-          <FaHeart
-            className="absolute top-4 right-4 animate-yurak"
-            style={{
-              animationIterationCount: "1",
-            }}
-            size={20}
-            color="#7f4dff"
-            onClick={handleFavorite}
-          />
-        ) : (
-          <FaRegHeart
-            className="absolute top-4 right-4"
-            size={20}
-            onClick={handleFavorite}
-          />
-        )}
-
-        {isCart ? (
-          <IoBagAddOutline
-            className="absolute top- right- animate-savat"
-            style={{
-              animationIterationCount: "2",
-            }}
-            size={20}
-            color="#7f4dff"
-            onClick={handleCart}
-          />
-        ) : (
-          <IoBagCheckOutline
-            className="absolute -bottom-12 right-3"
-            size={20}
-            onClick={handleCart}
-          />
-        )}
-      </div>
-      <p
-        className="font-bold text-[16px] h-12 line-clamp-2"
-        onClick={hanleClick}
-      >
-        {title}
-      </p>
-      {rating == 0 ? (
-        <p>Product not rated yet...</p>
-      ) : (
-        <Rating
-          readonly
-          initialValue={rating}
-          SVGstyle={{ display: "inline-block" }}
-          allowFraction
-          size={25}
-          transition
+        <img
+          src={images[0]}
+          alt=""
+          className="w-[270px] rounded-xl"
+          onClick={hanleClick}
         />
-      )}
-      <br />
+        <div className="flex flex-col space-y-4">
+          {isFavorite ? (
+            <FaHeart
+              className="absolute top-4 right-4 animate-yurak border rounded-full p-1 box-content bg-white"
+              style={{
+                animationIterationCount: "1",
+              }}
+              size={24}
+              color="#a52a2a"
+              onClick={handleFavorite}
+            />
+          ) : (
+            <FiHeart
+              className="absolute top-4 right-4 border rounded-full p-1 box-content bg-white"
+              size={24}
+              onClick={handleFavorite}
+              color="gray"
+            />
+          )}
 
-      {/* <p className='bg-yellow-200 w-24 mt-2 text-xs'>{}</p> */}
+          <BiBarChart
+            className="absolute top-11 right-4 border rounded-full p-1 box-content bg-white"
+            size={24}
+            color="gray"
+          />
+        </div>
+      </div>
+      <p className="dark:text-white line-clamp-1">{title}</p>
 
-      <p className="text-xs pt-5 text-slate-500 line-through">{fullPrice}</p>
-      <div className="flex justify-between p-2">
-        <p className="">{sellPrice} so'm</p>
-        <IoBagAddOutline className="" size={20} onClick={handleCart} />
+      <p className="pt-5 font-bold">{fullPrice} so'm</p>
+
+      <p className="bg-yellow-700 w-32 mt-2 text-xs rounded-md p-1 dark:bg-white">
+        {installmentPrice} so'm x 12oy
+      </p>
+
+      <div className="flex justify-between py-5">
+        <button className="border rounded-xl py-2 px-4 border-black dark:border-olcha dark:text-olcha">
+          <LuShoppingCart className="" size={20} onClick={handleCart} />
+        </button>
+        <button className="border rounded-xl py-2 px-12 border-red-800 text-red-800">
+          Muddatli to'lov
+        </button>
       </div>
     </div>
   );
